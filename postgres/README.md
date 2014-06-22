@@ -3,24 +3,37 @@ Postgres containers
 
 These containers are publically available as automated builds at
 ```
-wyaeld/postgres:9.3
-wyaeld/postgres:9.4
-wyaeld/postgres-data
+wyaeld/postgres:9.3 (based on ubuntu:trusty)
+wyaeld/postgres:9.4 (based on ubuntu:trusty)
+wyaeld/postgres:data  (based on busybox:ubuntu-14.04)
 ```
 
 `wyaeld/postgres:9.3` is the one tagged as `latest` since it is stable
+
 `wyaeld/postgres:9.4` is built from the beta1 release of 9.4
 
 PostgreSQL for Docker.
 
-    $ docker run -d -p 5432:5432 -e POSTGRESQL_USER=test -e POSTGRESQL_PASS=oe9jaacZLbR9pN -e POSTGRESQL_DB=test wyaeld/postgres
+First setup a data container
+
+    $ docker run --name app_data wyaeld/postgres:data
+
+    $ docker run -d -p 5432:5432 --volumes-from app_data wyaeld/postgres
     da809981545f
-    $ psql -h localhost -U test test
-    Password for user test:
+
+Or if you want to control the credentials
+
+    $ docker run -d -p 5432:5432 --volumes-from app_data -e POSTGRESQL_USER=test -e POSTGRESQL_PASS=oe9jaacZLbR9pN -e POSTGRESQL_DB=test wyaeld/postgres`
+    da809981545f
+
+Then connect in 
+
+    $ psql -h localhost -U docker docker
+    Password for user docker:
     psql (9.3.4, server 9.3.4)
     Type "help" for help.
 
-    test=#
+    docker=#
 
 (Example assumes PostgreSQL client is installed on Docker host.)
 
