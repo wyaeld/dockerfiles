@@ -25,7 +25,8 @@ RUN LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 DEBIAN_FRONTEND=noninteractive apt-get i
     postgresql-client-$POSTGRES_VERSION \
     postgresql-contrib-$POSTGRES_VERSION && \
     apt-get clean && \
-    rm -Rf /var/cache/*
+    rm -Rf /var/cache/* && \
+    mkdir /var/cache/debconf
 
 # Adjust PostgreSQL configuration so that remote connections to the
 # database are possible. 
