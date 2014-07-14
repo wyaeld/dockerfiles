@@ -14,8 +14,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qy install language-pack-en && \
     export LANG=en_US.UTF-8 && \
     export LC_ALL=en_US.UTF-8 && \
     apt-get clean && \
-    rm -Rf /var/cache/* && \
-    mkdir /var/cache/debconf \
+    rm -Rf /var/cache/apt && \
     DEBIAN_FRONTEND=noninteractive locale-gen en_US.UTF-8 &&\
     DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales &&\
     update-locale LANG=en_US.UTF-8
@@ -26,8 +25,7 @@ RUN LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 DEBIAN_FRONTEND=noninteractive apt-get i
     postgresql-client-$POSTGRES_VERSION \
     postgresql-contrib-$POSTGRES_VERSION && \
     apt-get clean && \
-    rm -Rf /var/cache/* && \
-    mkdir /var/cache/debconf
+    rm -Rf /var/cache/apt
 
 # Adjust PostgreSQL configuration so that remote connections to the
 # database are possible. 

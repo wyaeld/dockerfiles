@@ -17,8 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     nodejs && \
     apt-get clean && \
-    rm -Rf /var/cache/* && \
-    mkdir /var/cache/debconf
+    rm -Rf /var/cache/apt
 
 # Ruby 2.1.2 stable via ruby-install, cleaned up the ruby src afterwards (src is 350mb)
 RUN echo 'gem: --no-document' >> /usr/local/etc/gemrc &&\

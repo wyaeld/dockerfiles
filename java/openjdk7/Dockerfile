@@ -11,8 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     openjdk-7-jdk && \
     apt-get clean && \
-    rm -Rf /var/cache/* && \
-    mkdir /var/cache/debconf
+    rm -Rf /var/cache/apt
 
 ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
 
