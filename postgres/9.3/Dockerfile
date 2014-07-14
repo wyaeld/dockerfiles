@@ -15,6 +15,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qy install language-pack-en && \
     export LC_ALL=en_US.UTF-8 && \
     apt-get clean && \
     rm -Rf /var/cache/* && \
+    mkdir /var/cache/debconf \
     DEBIAN_FRONTEND=noninteractive locale-gen en_US.UTF-8 &&\
     DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales &&\
     update-locale LANG=en_US.UTF-8
