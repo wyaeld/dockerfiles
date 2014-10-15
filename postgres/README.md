@@ -4,7 +4,7 @@ Postgres containers
 These containers are publically available as automated builds at
 ```
 wyaeld/postgres:9.3 (based on ubuntu:trusty)
-wyaeld/postgres:9.4 (based on ubuntu:trusty)
+wyaeld/postgres:9.4 (based on debian:7.6, now updated to beta3)
 wyaeld/postgres:data  (based on busybox:ubuntu-14.04)
 ```
 
@@ -25,6 +25,10 @@ Or if you want to control the credentials
 
     $ docker run -d -p 5432:5432 --volumes-from app_data -e POSTGRESQL_USER=test -e POSTGRESQL_PASS=oe9jaacZLbR9pN -e POSTGRESQL_DB=test wyaeld/postgres`
     da809981545f
+
+Locale will default to en_US.UTF-8.  You can choose another locale e.g.
+
+    $ docker run -d -p 5432:5432 -e LOCALE=en_NZ.UTF-8 --volumes-from app_data wyaeld/postgres
 
 Then connect in 
 

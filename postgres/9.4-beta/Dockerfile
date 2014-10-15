@@ -12,11 +12,6 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F
 
 RUN apt-get update && apt-get install -y locales sudo
 
-# ucomment NZ locale and generate
-RUN sed "s/# en_NZ.UTF-8 UTF-8/en_NZ.UTF-8 UTF-8/" -i /etc/locale.gen && locale-gen
-ENV LANG en_NZ.utf8
-ENV LANGUAGE en_NZ.utf8
-
 RUN apt-get install -y --no-install-recommends  \
     libpq5 \
     postgresql-$POSTGRES_VERSION \
@@ -30,10 +25,12 @@ RUN apt-get install -y --no-install-recommends  \
 RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/$POSTGRES_VERSION/main/pg_hba.conf && \
     echo "listen_addresses='*'" >> /etc/postgresql/$POSTGRES_VERSION/main/postgresql.conf
 
+COPY docker-entrypoint.sh /docker-entrypoint
 COPY run /usr/local/bin/run
 
 # Note: This container has no native volume, its expected to run with --volumes-from another
 
 EXPOSE 5432
 
+ENTRYPOINT ["/docker-entrypoint"]
 CMD ["/usr/local/bin/run"]
