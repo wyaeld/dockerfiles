@@ -1,25 +1,23 @@
-FROM ubuntu:trusty
+FROM debian:7.6
+
 MAINTAINER Brad Murray <wyaeld@gmail.com> <brad.murray@datacom.co.nz>
 
 ENV POSTGRES_VERSION 9.4
+ENV DEBIAN_FRONTEND noninteractive
 
 # Add the PostgreSQL PGP key to verify their Debian packages.
 # It should be the same key as https://www.postgresql.org/media/keys/ACCC4CF8.asc 
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8 && \
-  echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main $POSTGRES_VERSION" > /etc/apt/sources.list.d/pgdg.list && \
-  apt-get update
+  echo "deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main $POSTGRES_VERSION" > /etc/apt/sources.list.d/pgdg.list
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -qy install language-pack-en && \
-    export LANGUAGE=en_US.UTF-8 && \
-    export LANG=en_US.UTF-8 && \
-    export LC_ALL=en_US.UTF-8 && \
-    apt-get clean && \
-    rm -Rf /var/cache/apt && \
-    DEBIAN_FRONTEND=noninteractive locale-gen en_US.UTF-8 &&\
-    DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales &&\
-    update-locale LANG=en_US.UTF-8
+RUN apt-get update && apt-get install -y locales sudo
 
-RUN LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 DEBIAN_FRONTEND=noninteractive apt-get install -y \
+# ucomment NZ locale and generate
+RUN sed "s/# en_NZ.UTF-8 UTF-8/en_NZ.UTF-8 UTF-8/" -i /etc/locale.gen && locale-gen
+ENV LANG en_NZ.utf8
+ENV LANGUAGE en_NZ.utf8
+
+RUN apt-get install -y --no-install-recommends  \
     libpq5 \
     postgresql-$POSTGRES_VERSION \
     postgresql-client-$POSTGRES_VERSION \
@@ -32,8 +30,7 @@ RUN LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 DEBIAN_FRONTEND=noninteractive apt-get i
 RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/$POSTGRES_VERSION/main/pg_hba.conf && \
     echo "listen_addresses='*'" >> /etc/postgresql/$POSTGRES_VERSION/main/postgresql.conf
 
-ADD run /usr/local/bin/run
-RUN chmod +x /usr/local/bin/run
+COPY run /usr/local/bin/run
 
 # Note: This container has no native volume, its expected to run with --volumes-from another
 
