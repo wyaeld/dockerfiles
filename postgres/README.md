@@ -3,7 +3,7 @@ Postgres containers
 
 These containers are publically available as automated builds at
 ```
-wyaeld/postgres:9.3 (based on ubuntu:trusty)
+wyaeld/postgres:9.3 (based on debian:7.6)
 wyaeld/postgres:9.4 (based on debian:7.6, now updated to beta3)
 wyaeld/postgres:data  (based on busybox:ubuntu-14.04)
 ```

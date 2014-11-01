@@ -1,15 +1,6 @@
 #!/bin/bash
 set -e
 
-POSTGRESQL_USER=${POSTGRESQL_USER:-"docker"}
-POSTGRESQL_PASS=${POSTGRESQL_PASS:-"docker"}
-POSTGRESQL_DB=${POSTGRESQL_DB:-"docker"}
-POSTGRESQL_TEMPLATE=${POSTGRESQL_TEMPLATE:-"DEFAULT"}
-
-POSTGRESQL_BIN=/usr/lib/postgresql/9.3/bin/postgres
-POSTGRESQL_CONFIG_FILE=/etc/postgresql/9.3/main/postgresql.conf
-POSTGRESQL_DATA=/var/lib/postgresql/9.3/main
-
 POSTGRESQL_SINGLE="sudo -u postgres $POSTGRESQL_BIN --single --config-file=$POSTGRESQL_CONFIG_FILE"
 
 if [ ! -d $POSTGRESQL_DATA ]; then
