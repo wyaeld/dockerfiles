@@ -25,6 +25,11 @@ RUN apt-get install -y --no-install-recommends  \
 RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/$POSTGRES_VERSION/main/pg_hba.conf && \
     echo "listen_addresses='*'" >> /etc/postgresql/$POSTGRES_VERSION/main/postgresql.conf
 
+# Setup temporary directories
+RUN mkdir -p /var/run/postgresql/$POSTGRES_VERSION-main.pg_stat_tmp
+RUN chown postgres /var/run/postgresql/$POSTGRES_VERSION-main.pg_stat_tmp
+RUN chgrp postgres /var/run/postgresql/$POSTGRES_VERSION-main.pg_stat_tmp
+
 COPY docker-entrypoint.sh /docker-entrypoint
 COPY run /usr/local/bin/run
 
