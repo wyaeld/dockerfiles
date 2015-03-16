@@ -53,5 +53,6 @@ group :alpine do
   gem 'json',               '1.8.1'              
   gem 'nokogiri',           '1.6.5'
   gem 'pg',                 '0.17.1'
-  gem 'timers',             '4.0.1'
+  gem 'hitimes',            '1.2.2'
+  gem 'curb',            '0.8.4'
 end

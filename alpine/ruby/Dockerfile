@@ -17,9 +17,9 @@ RUN apk update && apk add \
   ruby-bcrypt \
   ruby-rails \
   ruby-bundler \
-  ruby-timers \
+  ruby-hitimes \
+  ruby-curb \
   git \
-  openssl \
   ca-certificates 
 
 #RUN apk add gcc
