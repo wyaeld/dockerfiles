@@ -19,6 +19,7 @@ RUN apk update && apk add \
   ruby-bundler \
   ruby-hitimes \
   ruby-curb \
+  ruby-puma \
   git \
   ca-certificates 
 
